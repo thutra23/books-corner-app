@@ -7,7 +7,9 @@ const WantToRead = props => {
 
             <ul className="allBooks">
 
-            {/* {console.log(props.wantToRead)} */}
+            {console.log(props.wantToRead)}
+
+            {props.wantToRead == false ? <div style={{color:"black"}}>You haven't added any books to this list yet !</div>: null} 
 
 
             {props.wantToRead !== undefined ? 

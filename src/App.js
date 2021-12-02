@@ -13,6 +13,8 @@ import HaveRead from "./HaveRead";
 
 const App = props => {
 
+    const [isMounted, setIsMounted] = useState(false);
+
     const history = useHistory();
     
     useEffect(()=>{
@@ -22,10 +24,22 @@ const App = props => {
       }, [])
 
     useEffect(function refreshAllBooksOnce() {
+        setIsMounted(true);
+        setLoading(true);
         axios.get("/books")
-        .then(result=>setBooks(result.data))
-        .catch(error=>console.log(error))
-    },[])
+        .then(result=>{
+            if(isMounted){
+                setBooks(result.data)
+                // setLoading(false)
+            }})
+            
+        .catch(error=>{
+            console.log(error);
+            setLoading(false)})
+            
+
+        return ()=>{ setIsMounted(false) }
+    },[books])
 
     const [books, setBooks] = useState([]);
 
@@ -50,42 +64,73 @@ const App = props => {
         .catch(error=>console.log(error));
     }
 
-    // const removeBookFromWantToRead = (id)=>{
-    //         console.log(id),
-    //         setWantToRead(books.length > 0 && books.filter(book=>book._id !== id))
-       
-    // }
-
-    // const removeBookFromHaveRead = (id)=>{
-    //     console.log(id);
-    //     setHaveRead(books.length > 0 && books.filter(book=>book._id !== id));
-    // }
-
     useEffect(()=>{
+        setIsMounted(true);
+        // setLoading(true);
         if ( loading ) {
             axios.get("/books")
             .then(result=> 
-                setBooks(result.data),
-                setLoading(false)
-                )
-            .catch(error=>console.log(error))
+                // {
+                // if(isMounted) {
+                    setBooks(result.data)
+                    // setLoading(true)
+            //     }
+            // }
+            )
+               
+            .catch(error=>console.log(error));
+
+            return ()=>{setIsMounted(false)}
         } 
 
     }, [loading])
 
     useEffect(()=>{
+
+        setIsMounted(true);  
+
+        setLoading(true);
+        
         axios.get("/books")
-        .then(result=>(
-        setWantToRead(result.data.length > 0 && result.data.filter(book=>book.wantToRead == true))))
+        .then(result=>{
+           if(isMounted) 
+           {
+
+            setWantToRead(result.data.length > 0 && result.data.filter(book=>book.wantToRead == true))
+
+            setLoading(false);
+
+           }
+            })
       
-        .catch(error=>console.log(error))
+        .catch(error=>
+            {
+            if(!isMounted) {
+                console.log(error)
+                setLoading(false);
+            };
+        }
+        )
+            
+
+        //cleanup function
+        return  () => { setIsMounted(false)}
+
     }, [books])
 
     useEffect(()=>{
+        setIsMounted(true);
         axios.get("/books")
-        .then(result=>(
-            setHaveRead(result.data.length > 0 && result.data.filter(book=>book.haveRead == true))
-        ))
+        .then(result=>
+            {
+            if(isMounted) {
+                setHaveRead(result.data.length > 0 && result.data.filter(book=>book.haveRead == true))
+            }
+        }
+        )
+        .catch(error=>console.log(error));
+
+        return ()=>{setIsMounted(false)}
        
     }, [books])
 

@@ -9,6 +9,8 @@ const HaveRead = props => {
 
             {console.log(props.haveRead)}
 
+            {props.haveRead == false ? <div style={{color:"black"}}>You haven't added any books to this list yet !</div>: null} 
+
             {props.haveRead !== undefined ? 
             props.haveRead.map((book,index)=>(
                 <li className="bookCard" key={index}> 

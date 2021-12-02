@@ -13917,6 +13917,11 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var App = function App(props) {
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      isMounted = _useState2[0],
+      setIsMounted = _useState2[1];
+
   var history = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_7__.useHistory)();
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
     if (window.originalUrl) {
@@ -13924,47 +13929,55 @@ var App = function App(props) {
     }
   }, []);
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function refreshAllBooksOnce() {
+    setIsMounted(true);
+    setLoading(true);
     axios__WEBPACK_IMPORTED_MODULE_0___default().get("/books").then(function (result) {
-      return setBooks(result.data);
+      if (isMounted) {
+        setBooks(result.data); // setLoading(false)
+      }
     })["catch"](function (error) {
-      return console.log(error);
+      console.log(error);
+      setLoading(false);
     });
-  }, []);
+    return function () {
+      setIsMounted(false);
+    };
+  }, [books]);
 
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
-      _useState2 = _slicedToArray(_useState, 2),
-      books = _useState2[0],
-      setBooks = _useState2[1];
-
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(""),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
       _useState4 = _slicedToArray(_useState3, 2),
-      name = _useState4[0],
-      setName = _useState4[1];
+      books = _useState4[0],
+      setBooks = _useState4[1];
 
   var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(""),
       _useState6 = _slicedToArray(_useState5, 2),
-      author = _useState6[0],
-      setAuthor = _useState6[1];
+      name = _useState6[0],
+      setName = _useState6[1];
 
   var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(""),
       _useState8 = _slicedToArray(_useState7, 2),
-      summary = _useState8[0],
-      setSummary = _useState8[1];
+      author = _useState8[0],
+      setAuthor = _useState8[1];
 
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(""),
       _useState10 = _slicedToArray(_useState9, 2),
-      wantToRead = _useState10[0],
-      setWantToRead = _useState10[1];
+      summary = _useState10[0],
+      setSummary = _useState10[1];
 
   var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
       _useState12 = _slicedToArray(_useState11, 2),
-      haveRead = _useState12[0],
-      setHaveRead = _useState12[1];
+      wantToRead = _useState12[0],
+      setWantToRead = _useState12[1];
 
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
       _useState14 = _slicedToArray(_useState13, 2),
-      loading = _useState14[0],
-      setLoading = _useState14[1];
+      haveRead = _useState14[0],
+      setHaveRead = _useState14[1];
+
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
+      _useState16 = _slicedToArray(_useState15, 2),
+      loading = _useState16[0],
+      setLoading = _useState16[1];
 
   var deleteBook = function deleteBook(id) {
     axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"]("/books/" + id).then(function (result) {
@@ -13974,40 +13987,65 @@ var App = function App(props) {
     })))["catch"](function (error) {
       return console.log(error);
     });
-  }; // const removeBookFromWantToRead = (id)=>{
-  //         console.log(id),
-  //         setWantToRead(books.length > 0 && books.filter(book=>book._id !== id))
-  // }
-  // const removeBookFromHaveRead = (id)=>{
-  //     console.log(id);
-  //     setHaveRead(books.length > 0 && books.filter(book=>book._id !== id));
-  // }
-
+  };
 
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    setIsMounted(true); // setLoading(true);
+
     if (loading) {
       axios__WEBPACK_IMPORTED_MODULE_0___default().get("/books").then(function (result) {
-        return setBooks(result.data);
-      }, setLoading(false))["catch"](function (error) {
+        return (// {
+          // if(isMounted) {
+          setBooks(result.data)
+        );
+      } // setLoading(true)
+      //     }
+      // }
+      )["catch"](function (error) {
         return console.log(error);
       });
+      return function () {
+        setIsMounted(false);
+      };
     }
   }, [loading]);
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    setIsMounted(true);
+    setLoading(true);
     axios__WEBPACK_IMPORTED_MODULE_0___default().get("/books").then(function (result) {
-      return setWantToRead(result.data.length > 0 && result.data.filter(function (book) {
-        return book.wantToRead == true;
-      }));
+      if (isMounted) {
+        setWantToRead(result.data.length > 0 && result.data.filter(function (book) {
+          return book.wantToRead == true;
+        }));
+        setLoading(false);
+      }
+    })["catch"](function (error) {
+      if (!isMounted) {
+        console.log(error);
+        setLoading(false);
+      }
+
+      ;
+    }); //cleanup function
+
+    return function () {
+      setIsMounted(false);
+    };
+  }, [books]);
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    setIsMounted(true);
+    axios__WEBPACK_IMPORTED_MODULE_0___default().get("/books").then(function (result) {
+      if (isMounted) {
+        setHaveRead(result.data.length > 0 && result.data.filter(function (book) {
+          return book.haveRead == true;
+        }));
+      }
     })["catch"](function (error) {
       return console.log(error);
     });
-  }, [books]);
-  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
-    axios__WEBPACK_IMPORTED_MODULE_0___default().get("/books").then(function (result) {
-      return setHaveRead(result.data.length > 0 && result.data.filter(function (book) {
-        return book.haveRead == true;
-      }));
-    });
+    return function () {
+      setIsMounted(false);
+    };
   }, [books]); //this add function is working correctly now, shows book immediately after adding
 
   var addBookToWantToRead = function addBookToWantToRead(event, id) {
@@ -14051,20 +14089,20 @@ var App = function App(props) {
     setSummary(event.target.value);
   };
 
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(),
-      _useState16 = _slicedToArray(_useState15, 2),
-      nameError = _useState16[0],
-      setNameError = _useState16[1];
-
   var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(),
       _useState18 = _slicedToArray(_useState17, 2),
-      authorError = _useState18[0],
-      setAuthorError = _useState18[1];
+      nameError = _useState18[0],
+      setNameError = _useState18[1];
 
   var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(),
       _useState20 = _slicedToArray(_useState19, 2),
-      summaryError = _useState20[0],
-      setSummaryError = _useState20[1];
+      authorError = _useState20[0],
+      setAuthorError = _useState20[1];
+
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(),
+      _useState22 = _slicedToArray(_useState21, 2),
+      summaryError = _useState22[0],
+      setSummaryError = _useState22[1];
 
   var validateForm = function validateForm() {
     var nameError = "";
@@ -14295,7 +14333,11 @@ __webpack_require__.r(__webpack_exports__);
 var HaveRead = function HaveRead(props) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "The books you have read"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", {
     className: "allBooks"
-  }, console.log(props.haveRead), props.haveRead !== undefined ? props.haveRead.map(function (book, index) {
+  }, console.log(props.haveRead), props.haveRead == false ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    style: {
+      color: "black"
+    }
+  }, "You haven't added any books to this list yet !") : null, props.haveRead !== undefined ? props.haveRead.map(function (book, index) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
       className: "bookCard",
       key: index
@@ -14365,7 +14407,11 @@ __webpack_require__.r(__webpack_exports__);
 var WantToRead = function WantToRead(props) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "The books you want to read"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", {
     className: "allBooks"
-  }, props.wantToRead !== undefined ? props.wantToRead.map(function (book, index) {
+  }, console.log(props.wantToRead), props.wantToRead == false ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    style: {
+      color: "black"
+    }
+  }, "You haven't added any books to this list yet !") : null, props.wantToRead !== undefined ? props.wantToRead.map(function (book, index) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
       className: "bookCard",
       key: index
