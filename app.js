@@ -6,7 +6,7 @@ const connection = require('./db/connection.js');
 
 connection.once('open', ()=>{
     const server = app.listen(process.env.PORT || 8080, ()=>{
-    console.log("Connected and listening on port 8080");
+    console.log(`Connected and listening on port ${process.env.PORT || 8080}`);
     });
 });
 
