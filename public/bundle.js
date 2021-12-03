@@ -14014,9 +14014,12 @@ var App = function App(props) {
     setLoading(true);
     axios__WEBPACK_IMPORTED_MODULE_0___default().get("/books").then(function (result) {
       if (isMounted) {
-        setWantToRead(result.data.length > 0 && result.data.filter(function (book) {
-          return book.wantToRead == true;
-        }));
+        if (result.data.length > 0) {
+          setWantToRead(result.data.filter(function (book) {
+            return book.wantToRead == true;
+          }));
+        }
+
         setLoading(false);
       }
     })["catch"](function (error) {
@@ -14035,11 +14038,13 @@ var App = function App(props) {
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
     setIsMounted(true);
     axios__WEBPACK_IMPORTED_MODULE_0___default().get("/books").then(function (result) {
-      if (isMounted) {
-        setHaveRead(result.data.length > 0 && result.data.filter(function (book) {
+      if (isMounted && result.data.length > 0) {
+        setHaveRead(result.data.filter(function (book) {
           return book.haveRead == true;
         }));
       }
+
+      setLoading(false);
     })["catch"](function (error) {
       return console.log(error);
     });
@@ -14087,75 +14092,65 @@ var App = function App(props) {
 
   var handleSummaryChange = function handleSummaryChange(event) {
     setSummary(event.target.value);
-  };
+  }; // const [nameError, setNameError] = useState();
+  // const [authorError, setAuthorError] = useState();
+  // const [summaryError, setSummaryError] = useState();
+  // const validateForm= ()=>{
+  //     let nameError = "";
+  //     let authorError = "";
+  //     let summaryError = "";
+  //      if(name.trim() == "")  {
+  //         nameError="Please enter book's name."
+  //     } else if (name.length < 2) {
+  //         nameError="Name is too short! Name must be between 2 and 30 characters."
+  //     } else if (name.length > 30) {
+  //         nameError=" Name is too long! Name must be between 2 and 30 characters. "
+  //     }
+  //     if(author.trim() == "")  {
+  //         authorError= "Please enter author's name."
+  //     } else if (author.length < 3) {
+  //         authorError="Author's name is too short! Author's name must be between 3 and 20 characters."
+  //     } else if (author.length > 20) {
+  //         authorError=" Author's name is too long! Author's name must be between 3 and 20 characters. "
+  //     }
+  //     if (summary.trim() == "")  {
+  //         summaryError= "Please enter a short summary."
+  //     } else if (summary.length < 3) {
+  //         summaryError=" Summary is too short! Summary must be between 3 and 20 characters."
+  //     } else if (summary.length > 30) {
+  //         summaryError=" Summary is too long! Summary must be between 3 and 30 characters. "
+  //     }
+  //     if (nameError || authorError || summaryError) {
+  //         setNameError(nameError);
+  //         setAuthorError(authorError);
+  //         setSummaryError(summaryError);
+  //         return false;
+  //     } 
+  //     return true;
+  // }
 
-  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(),
+
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({}),
       _useState18 = _slicedToArray(_useState17, 2),
-      nameError = _useState18[0],
-      setNameError = _useState18[1];
-
-  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(),
-      _useState20 = _slicedToArray(_useState19, 2),
-      authorError = _useState20[0],
-      setAuthorError = _useState20[1];
-
-  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(),
-      _useState22 = _slicedToArray(_useState21, 2),
-      summaryError = _useState22[0],
-      setSummaryError = _useState22[1];
-
-  var validateForm = function validateForm() {
-    var nameError = "";
-    var authorError = "";
-    var summaryError = "";
-
-    if (name.trim() == "") {
-      nameError = "Please enter book's name.";
-    } else if (name.length < 2) {
-      nameError = "Name is too short! Name must be between 2 and 30 characters.";
-    } else if (name.length > 30) {
-      nameError = " Name is too long! Name must be between 2 and 30 characters. ";
-    }
-
-    if (author.trim() == "") {
-      authorError = "Please enter author's name.";
-    } else if (author.length < 3) {
-      authorError = "Author's name is too short! Author's name must be between 3 and 20 characters.";
-    } else if (author.length > 20) {
-      authorError = " Author's name is too long! Author's name must be between 3 and 20 characters. ";
-    }
-
-    if (summary.trim() == "") {
-      summaryError = "Please enter a short summary.";
-    } else if (summary.length < 3) {
-      summaryError = " Summary is too short! Summary must be between 3 and 20 characters.";
-    } else if (summary.length > 30) {
-      summaryError = " Summary is too long! Summary must be between 3 and 30 characters. ";
-    }
-
-    if (nameError || authorError || summaryError) {
-      setNameError(nameError);
-      setAuthorError(authorError);
-      setSummaryError(summaryError);
-      return false;
-    }
-
-    return true;
-  };
+      errors = _useState18[0],
+      setErrors = _useState18[1];
 
   var handleFormSubmit = function handleFormSubmit(event) {
     event.preventDefault();
-    var isValid = validateForm();
-
-    if (isValid) {
-      console.log(isValid);
-      setName("");
-      setAuthor("");
-      setSummary("");
-      setNameError("");
-      setAuthorError("");
-      setSummaryError("");
-    }
+    var error = {
+      name: "",
+      author: "",
+      summary: ""
+    }; // const isValid = validateForm();
+    // if (isValid) {
+    //     console.log(isValid);
+    //     setName("");
+    //     setAuthor("");
+    //     setSummary("");
+    //     setNameError("");
+    //     setAuthorError("");
+    //     setSummaryError("");
+    // }
 
     var book = {
       name: name,
@@ -14165,10 +14160,32 @@ var App = function App(props) {
       haveRead: false
     };
     axios__WEBPACK_IMPORTED_MODULE_0___default().post("/books", book).then(function (result) {
-      console.log(result.data), setLoading(true);
+      setErrors(error), console.log(result.data), setLoading(true);
     })["catch"](function (error) {
-      console.log(error.response);
-    });
+      var _error$response;
+
+      // console.log(error.response)
+      if ((error === null || error === void 0 ? void 0 : (_error$response = error.response) === null || _error$response === void 0 ? void 0 : _error$response.status) == 422) {
+        var _error$response2, _error$response2$data, _error$response2$data2;
+
+        error === null || error === void 0 ? void 0 : (_error$response2 = error.response) === null || _error$response2 === void 0 ? void 0 : (_error$response2$data = _error$response2.data) === null || _error$response2$data === void 0 ? void 0 : (_error$response2$data2 = _error$response2$data.errors) === null || _error$response2$data2 === void 0 ? void 0 : _error$response2$data2.forEach(function (_ref) {
+          var message = _ref.message,
+              path = _ref.path;
+
+          if (path[0] == 'name') {
+            return error.name = message;
+          }
+
+          if (path[0] == 'author') {
+            return error.author = message;
+          }
+
+          if (path[0] = 'summary') {
+            return error.summary = message;
+          }
+        });
+      }
+    }); // setErrors(error);
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.BrowserRouter, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
@@ -14187,10 +14204,9 @@ var App = function App(props) {
     handleFormSubmit: handleFormSubmit,
     summary: summary,
     handleSummaryChange: handleSummaryChange,
-    wantToRead: wantToRead,
-    nameError: nameError,
-    authorError: authorError,
-    summaryError: summaryError
+    wantToRead: wantToRead // nameError={nameError} authorError={authorError} summaryError={summaryError} 
+    ,
+    errors: errors
   }), books.length > 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("h1", null, "All your books") : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_Books__WEBPACK_IMPORTED_MODULE_3__["default"], {
     books: books,
     addBookToWantToRead: addBookToWantToRead,
@@ -14231,6 +14247,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var BookForm = function BookForm(props) {
+  var _props$errors, _props$errors2, _props$errros;
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "addBookForm"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "Add a book: "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
@@ -14245,23 +14263,23 @@ var BookForm = function BookForm(props) {
     type: "text",
     value: props.name,
     onChange: props.handleNameChange
-  })), props.nameError ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  })), props.errors ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "errorMessage"
-  }, props.nameError) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", null, "Author:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+  }, (_props$errors = props.errors) === null || _props$errors === void 0 ? void 0 : _props$errors.name) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", null, "Author:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
     id: "bookAuthor",
     type: "text",
     value: props.author,
     onChange: props.handleAuthorChange
-  })), props.authorError ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  })), props.errors ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "errorMessage"
-  }, props.authorError) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", null, "Summary:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("textarea", {
+  }, (_props$errors2 = props.errors) === null || _props$errors2 === void 0 ? void 0 : _props$errors2.author) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", null, "Summary:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("textarea", {
     id: "bookSummary",
     type: "text",
     value: props.summary,
     onChange: props.handleSummaryChange
-  })), props.summaryError ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  })), console.log(props.errors), props.errors ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "errorMessage"
-  }, props.summaryError) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  }, (_props$errros = props.errros) === null || _props$errros === void 0 ? void 0 : _props$errros.summary) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "submitBtn"
   }, "Submit")));
 };

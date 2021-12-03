@@ -11,7 +11,6 @@ const WantToRead = props => {
 
             {props.wantToRead == false ? <div style={{color:"black"}}>You haven't added any books to this list yet !</div>: null} 
 
-
             {props.wantToRead !== undefined ? 
             props.wantToRead.map((book,index)=>(
                 <li className="bookCard" key={index}> 

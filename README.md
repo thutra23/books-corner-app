@@ -1,6 +1,6 @@
-# books-corner-app 
+# books-corner-app
 
-INDIVIDUAL PROJECT 
+INDIVIDUAL PROJECT
 
 wmdd fall 2021 fullstack individual project
 

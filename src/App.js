@@ -95,11 +95,12 @@ const App = props => {
         .then(result=>{
            if(isMounted) 
            {
+                if (result.data.length > 0) {
+                    setWantToRead( result.data.filter(book=>book.wantToRead == true))  
 
-            setWantToRead(result.data.length > 0 && result.data.filter(book=>book.wantToRead == true))
+                }
 
-            setLoading(false);
-
+                setLoading(false);
            }
             })
       
@@ -110,8 +111,7 @@ const App = props => {
                 setLoading(false);
             };
         }
-        )
-            
+        )       
 
         //cleanup function
         return  () => { setIsMounted(false)}
@@ -123,9 +123,11 @@ const App = props => {
         axios.get("/books")
         .then(result=>
             {
-            if(isMounted) {
-                setHaveRead(result.data.length > 0 && result.data.filter(book=>book.haveRead == true))
+            if(isMounted && result.data.length > 0) {
+                setHaveRead(result.data.filter(book=>book.haveRead == true))
             }
+
+            setLoading(false);
         }
         )
         .catch(error=>console.log(error));
@@ -180,67 +182,76 @@ const App = props => {
     };
 
 
-    const [nameError, setNameError] = useState();
+    // const [nameError, setNameError] = useState();
 
-    const [authorError, setAuthorError] = useState();
+    // const [authorError, setAuthorError] = useState();
 
-    const [summaryError, setSummaryError] = useState();
+    // const [summaryError, setSummaryError] = useState();
 
-    const validateForm= ()=>{
-        let nameError = "";
-        let authorError = "";
-        let summaryError = "";
+    // const validateForm= ()=>{
+    //     let nameError = "";
+    //     let authorError = "";
+    //     let summaryError = "";
 
-         if(name.trim() == "")  {
-            nameError="Please enter book's name."
-        } else if (name.length < 2) {
-            nameError="Name is too short! Name must be between 2 and 30 characters."
-        } else if (name.length > 30) {
-            nameError=" Name is too long! Name must be between 2 and 30 characters. "
-        }
+    //      if(name.trim() == "")  {
+    //         nameError="Please enter book's name."
+    //     } else if (name.length < 2) {
+    //         nameError="Name is too short! Name must be between 2 and 30 characters."
+    //     } else if (name.length > 30) {
+    //         nameError=" Name is too long! Name must be between 2 and 30 characters. "
+    //     }
 
-        if(author.trim() == "")  {
-            authorError= "Please enter author's name."
-        } else if (author.length < 3) {
-            authorError="Author's name is too short! Author's name must be between 3 and 20 characters."
-        } else if (author.length > 20) {
-            authorError=" Author's name is too long! Author's name must be between 3 and 20 characters. "
-        }
+    //     if(author.trim() == "")  {
+    //         authorError= "Please enter author's name."
+    //     } else if (author.length < 3) {
+    //         authorError="Author's name is too short! Author's name must be between 3 and 20 characters."
+    //     } else if (author.length > 20) {
+    //         authorError=" Author's name is too long! Author's name must be between 3 and 20 characters. "
+    //     }
 
-        if (summary.trim() == "")  {
-            summaryError= "Please enter a short summary."
-        } else if (summary.length < 3) {
-            summaryError=" Summary is too short! Summary must be between 3 and 20 characters."
-        } else if (summary.length > 30) {
-            summaryError=" Summary is too long! Summary must be between 3 and 30 characters. "
-        }
+    //     if (summary.trim() == "")  {
+    //         summaryError= "Please enter a short summary."
+    //     } else if (summary.length < 3) {
+    //         summaryError=" Summary is too short! Summary must be between 3 and 20 characters."
+    //     } else if (summary.length > 30) {
+    //         summaryError=" Summary is too long! Summary must be between 3 and 30 characters. "
+    //     }
 
-        if (nameError || authorError || summaryError) {
-            setNameError(nameError);
-            setAuthorError(authorError);
-            setSummaryError(summaryError);
+    //     if (nameError || authorError || summaryError) {
+    //         setNameError(nameError);
+    //         setAuthorError(authorError);
+    //         setSummaryError(summaryError);
 
-            return false;
-        } 
+    //         return false;
+    //     } 
 
-        return true;
-    }
+    //     return true;
+    // }
+
+    const [errors, setErrors] = useState({});
+
 
     const handleFormSubmit = (event)=>{
         event.preventDefault();
 
-        const isValid = validateForm();
-
-        if (isValid) {
-            console.log(isValid);
-            setName("");
-            setAuthor("");
-            setSummary("");
-            setNameError("");
-            setAuthorError("");
-            setSummaryError("");
-            
+        let error = {
+            name: "",
+            author: "",
+            summary:""
         }
+
+        // const isValid = validateForm();
+
+        // if (isValid) {
+        //     console.log(isValid);
+        //     setName("");
+        //     setAuthor("");
+        //     setSummary("");
+        //     setNameError("");
+        //     setAuthorError("");
+        //     setSummaryError("");
+            
+        // }
 
         const book = {
             name: name,
@@ -252,16 +263,31 @@ const App = props => {
 
         axios.post("/books", book)
         .then(result=>{
+            setErrors(error),
             console.log(result.data), 
             setLoading(true)
         }
         )
         .catch(error=>{
-            
-                console.log(error.response)
+                // console.log(error.response)
 
+            if(error?.response?.status == 422) {
+                error?.response?.data?.errors?.forEach(({message, path})=>{
+                    if(path[0]=='name') {
+                        return (error.name = message)
+                    }
+                    if(path[0]=='author') {
+                        return (error.author = message)
+                    }
+                    if(path[0]='summary') {
+                        return (error.summary = message)
+                    }
+                })
+            }
           
-        });
+        })
+
+        // setErrors(error);
 
     }
 
@@ -275,7 +301,9 @@ const App = props => {
             <div className="content">
                 <Switch>
                     <Route exact path="/">
-                        <BookForm books={books} name={name} author={author} handleNameChange={handleNameChange} handleAuthorChange={handleAuthorChange} handleFormSubmit={handleFormSubmit} summary={summary} handleSummaryChange={handleSummaryChange} wantToRead={wantToRead}  nameError={nameError} authorError={authorError} summaryError={summaryError} />
+                        <BookForm books={books} name={name} author={author} handleNameChange={handleNameChange} handleAuthorChange={handleAuthorChange} handleFormSubmit={handleFormSubmit} summary={summary} handleSummaryChange={handleSummaryChange} wantToRead={wantToRead}  
+                        // nameError={nameError} authorError={authorError} summaryError={summaryError} 
+                        errors={errors} />
 
                         {books.length > 0 ? <h1>All your books</h1> : null}
 
