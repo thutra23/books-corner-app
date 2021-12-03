@@ -12,7 +12,6 @@ const WantToRead = props => {
             {props.wantToRead !== undefined ? 
             props.wantToRead.map((book,index)=>(
                 <li className="bookCard" key={index}> 
-                     {console.log(book)}
                     <h2>Name: {book.name}</h2>
                     <h3>Author: {book.author}</h3>
                     <div>Summary: {book.summary}</div>

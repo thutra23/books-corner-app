@@ -14375,7 +14375,7 @@ var HaveRead = function HaveRead(props) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
       className: "bookCard",
       key: index
-    }, console.log(book), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "Name: ", book.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, "Author: ", book.author), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Summary: ", book.summary), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "Name: ", book.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, "Author: ", book.author), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Summary: ", book.summary), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
       id: "deleteBook",
       onClick: function onClick() {
         return props.deleteBook(book._id);
@@ -14447,7 +14447,7 @@ var WantToRead = function WantToRead(props) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
       className: "bookCard",
       key: index
-    }, console.log(book), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "Name: ", book.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, "Author: ", book.author), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Summary: ", book.summary), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "Name: ", book.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, "Author: ", book.author), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Summary: ", book.summary), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
       id: index,
       onClick: function onClick() {
         return props.deleteBook(book._id);
