@@ -7,7 +7,7 @@ const BookForm = props => {
         <div className="addBookForm">
         <h2>Add a book: </h2>
             <form action="/books" method="POST" id="bookForm" onSubmit={event=>props.handleFormSubmit(event)}>
-                <label>Book name: 
+                <label>Name: 
                     <input id="bookName" type="text" value ={props.name} onChange={props.handleNameChange}></input>
                 </label>
 
