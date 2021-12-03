@@ -174,18 +174,18 @@ const App = props => {
 
         if(author.trim() == "")  {
             authorError= "Please enter author's name."
-        } else if (author.length < 3) {
-            authorError="Author's name is too short! Author's name must be between 3 and 20 characters."
+        } else if (author.length < 2) {
+            authorError="Author's name is too short! Author's name must be between 2 and 20 characters."
         } else if (author.length > 20) {
-            authorError=" Author's name is too long! Author's name must be between 3 and 20 characters. "
+            authorError=" Author's name is too long! Author's name must be between 2 and 20 characters. "
         }
 
         if (summary.trim() == "")  {
             summaryError= "Please enter a short summary."
         } else if (summary.length < 3) {
-            summaryError=" Summary is too short! Summary must be between 3 and 20 characters."
-        } else if (summary.length > 30) {
-            summaryError=" Summary is too long! Summary must be between 3 and 30 characters. "
+            summaryError=" Summary is too short! Summary must be between 3 and 40 characters."
+        } else if (summary.length > 40) {
+            summaryError=" Summary is too long! Summary must be between 3 and 40 characters. "
         }
 
         if (nameError || authorError || summaryError) {
