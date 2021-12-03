@@ -35,7 +35,7 @@ const BookForm = props => {
                     
                     <div className="errorMessage">{props.summaryError}</div>
                     
-                <button className="submitBtn">Submit</button>
+                <button className="submitBtn">Add</button>
 
             </form>
 

@@ -12,8 +12,8 @@ const WantToRead = props => {
             {props.wantToRead !== undefined ? 
             props.wantToRead.map((book,index)=>(
                 <li className="bookCard" key={index}> 
-                    <h2>Name: {book.name}</h2>
-                    <h3>Author: {book.author}</h3>
+                    <h2>{book.name}</h2>
+                    <h3>{book.author}</h3>
                     <div>Summary: {book.summary}</div>
 
                     <button id={index} onClick={()=>props.deleteBook(book._id)}>Remove</button>

@@ -13886,13 +13886,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
 /* harmony import */ var _BookForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BookForm */ "./src/BookForm.js");
 /* harmony import */ var _Books__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Books */ "./src/Books.js");
 /* harmony import */ var _Navbar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Navbar */ "./src/Navbar.js");
 /* harmony import */ var _WantToRead__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./WantToRead */ "./src/WantToRead.js");
 /* harmony import */ var _HaveRead__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./HaveRead */ "./src/HaveRead.js");
+/* harmony import */ var _Footer__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Footer */ "./src/Footer.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -13916,13 +13917,14 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 var App = function App(props) {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
       _useState2 = _slicedToArray(_useState, 2),
       isMounted = _useState2[0],
       setIsMounted = _useState2[1];
 
-  var history = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_7__.useHistory)();
+  var history = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__.useHistory)();
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
     if (window.originalUrl) {
       history.push(window.originalUrl);
@@ -14198,11 +14200,11 @@ var App = function App(props) {
     setErrors(error);
   };
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.BrowserRouter, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.BrowserRouter, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
     className: "App"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_Navbar__WEBPACK_IMPORTED_MODULE_4__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
     className: "content"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Switch, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Route, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Switch, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
     exact: true,
     path: "/"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_BookForm__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -14224,20 +14226,20 @@ var App = function App(props) {
     addBookToWantToRead: addBookToWantToRead,
     deleteBook: deleteBook,
     addBookToHaveRead: addBookToHaveRead
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Route, {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
     exact: true,
     path: "/WantToRead"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_WantToRead__WEBPACK_IMPORTED_MODULE_5__["default"], {
     addBookToWantToRead: addBookToWantToRead,
     wantToRead: wantToRead,
     deleteBook: deleteBook
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Route, {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
     exact: true,
     path: "/HaveRead"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_HaveRead__WEBPACK_IMPORTED_MODULE_6__["default"], {
     haveRead: haveRead,
     deleteBook: deleteBook
-  }))))));
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_Footer__WEBPACK_IMPORTED_MODULE_7__["default"], null)));
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
@@ -14299,7 +14301,7 @@ var BookForm = function BookForm(props) {
     className: "errorMessage"
   }, props.summaryError), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "submitBtn"
-  }, "Submit")));
+  }, "Add")));
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (BookForm);
@@ -14352,6 +14354,30 @@ var Books = function Books(props) {
 
 /***/ }),
 
+/***/ "./src/Footer.js":
+/*!***********************!*\
+  !*** ./src/Footer.js ***!
+  \***********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+
+var Footer = function Footer(props) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
+    className: "footer"
+  }, "@2021 Rachel Ta"));
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Footer);
+
+/***/ }),
+
 /***/ "./src/HaveRead.js":
 /*!*************************!*\
   !*** ./src/HaveRead.js ***!
@@ -14375,7 +14401,7 @@ var HaveRead = function HaveRead(props) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
       className: "bookCard",
       key: index
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "Name: ", book.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, "Author: ", book.author), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Summary: ", book.summary), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, book.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, book.author), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Summary: ", book.summary), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
       id: "deleteBook",
       onClick: function onClick() {
         return props.deleteBook(book._id);
@@ -14447,7 +14473,7 @@ var WantToRead = function WantToRead(props) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
       className: "bookCard",
       key: index
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "Name: ", book.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, "Author: ", book.author), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Summary: ", book.summary), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, book.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, book.author), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Summary: ", book.summary), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
       id: index,
       onClick: function onClick() {
         return props.deleteBook(book._id);

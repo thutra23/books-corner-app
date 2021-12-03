@@ -9,6 +9,7 @@ import Books from "./Books";
 import Navbar from "./Navbar";
 import WantToRead from "./WantToRead";
 import HaveRead from "./HaveRead";
+import Footer from "./Footer";
 
 
 const App = props => {
@@ -288,6 +289,7 @@ const App = props => {
                     </Route>
                 </Switch>
                 </div>
+                <Footer />
             </div>
         </Router>
 
