@@ -161,6 +161,7 @@ button:hover {
 
 .errorMessage {
   color: coral;
+  text-align: center;
 }
 
 .emptyList {
