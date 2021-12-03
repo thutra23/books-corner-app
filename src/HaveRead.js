@@ -9,7 +9,7 @@ const HaveRead = props => {
 
             {console.log(props.haveRead)}
 
-            {props.haveRead == false ? <div style={{color:"black"}}>You haven't added any books to this list yet !</div>: null} 
+            {props.haveRead == false ? <div className="emptyList" style={{color:"black"}}>You haven't added any books to this list yet !</div>: null} 
 
             {props.haveRead !== undefined ? 
             props.haveRead.map((book,index)=>(
@@ -26,7 +26,7 @@ const HaveRead = props => {
             )
             )
             :
-            <div>You haven't added any books to this list yet!</div>
+            <div className="emptyList" >You haven't added any books to this list yet.</div>
             } 
             </ul>
 

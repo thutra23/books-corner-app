@@ -124,6 +124,7 @@ h1 {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 1rem;
+  padding: 0;
 }
 
 .bookCard {
@@ -152,4 +153,9 @@ button:hover {
 
 .errorMessage {
   color: coral;
+}
+
+.emptyList {
+  grid-column: span 4;
+  color: black;
 }

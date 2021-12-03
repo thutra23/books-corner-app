@@ -14352,6 +14352,7 @@ var HaveRead = function HaveRead(props) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "The books you have read"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", {
     className: "allBooks"
   }, console.log(props.haveRead), props.haveRead == false ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "emptyList",
     style: {
       color: "black"
     }
@@ -14365,7 +14366,9 @@ var HaveRead = function HaveRead(props) {
         return props.deleteBook(book._id);
       }
     }, "Remove"));
-  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "You haven't added any books to this list yet!")));
+  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "emptyList"
+  }, "You haven't added any books to this list yet.")));
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (HaveRead);
@@ -14426,9 +14429,7 @@ var WantToRead = function WantToRead(props) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "The books you want to read"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", {
     className: "allBooks"
   }, console.log(props.wantToRead), props.wantToRead == false ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    style: {
-      color: "black"
-    }
+    className: "emptyList"
   }, "You haven't added any books to this list yet !") : null, props.wantToRead !== undefined ? props.wantToRead.map(function (book, index) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
       className: "bookCard",
@@ -14439,7 +14440,7 @@ var WantToRead = function WantToRead(props) {
         return props.deleteBook(book._id);
       }
     }, "Remove"));
-  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "You haven't added any books to this list yet!")));
+  }) : null));
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (WantToRead);
