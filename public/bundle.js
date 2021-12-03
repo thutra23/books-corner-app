@@ -14352,10 +14352,7 @@ var HaveRead = function HaveRead(props) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "The books you have read"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", {
     className: "allBooks"
   }, console.log(props.haveRead), props.haveRead == false ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "emptyList",
-    style: {
-      color: "black"
-    }
+    className: "emptyList"
   }, "You haven't added any books to this list yet !") : null, props.haveRead !== undefined ? props.haveRead.map(function (book, index) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
       className: "bookCard",
@@ -14366,9 +14363,7 @@ var HaveRead = function HaveRead(props) {
         return props.deleteBook(book._id);
       }
     }, "Remove"));
-  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "emptyList"
-  }, "You haven't added any books to this list yet.")));
+  }) : null));
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (HaveRead);
