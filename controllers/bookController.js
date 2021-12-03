@@ -1,5 +1,4 @@
 const Book = require("../models/Book.js");
-const  bookValidator = require('../src/validators');
 
 exports.postBook = (req,res)=>{
     let newBook = new Book(req.body);

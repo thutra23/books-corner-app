@@ -29,7 +29,6 @@ const bookValidator= (req, res, next)=>{
     if (error==undefined) {
         next();
     } else {
-        // res.status(400).json({error: error})
         res.status(422).json({
             error: error,
             message: error.details

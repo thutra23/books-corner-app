@@ -17,7 +17,6 @@ const BookForm = props => {
 
                 <label>Author:
                     <input  id="bookAuthor" type="text" value={props.author} onChange={props.handleAuthorChange}></input>
-                
                 </label>
 
                 {props.errors ? <div className="errorMessage">{props.errors?.author}</div> : null}
@@ -28,10 +27,7 @@ const BookForm = props => {
                     Summary: 
                     <textarea  id="bookSummary" type="text" value = {props.summary} onChange={props.handleSummaryChange}> 
                     </textarea>
-                   
-                    </label>
-
-                    {console.log(props.errors)}
+                </label>
                     
                     {props.errors ? <div className="errorMessage">
                         {props.errros?.summary}

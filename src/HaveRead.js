@@ -7,8 +7,6 @@ const HaveRead = props => {
 
             <ul className="allBooks">
 
-            {console.log(props.haveRead)}
-
             {props.haveRead == false ? <div className="emptyList" >You haven't added any books to this list yet !</div>: null} 
 
             {props.haveRead !== undefined ? 
@@ -19,9 +17,7 @@ const HaveRead = props => {
                     <h3>Author: {book.author}</h3>
                     <div>Summary: {book.summary}</div>
 
-                    <button id="deleteBook" onClick={()=>props.deleteBook(book._id)}
-                    >Remove</button>
-
+                    <button id="deleteBook" onClick={()=>props.deleteBook(book._id)}>Remove</button>
                 </li>
             )
             )

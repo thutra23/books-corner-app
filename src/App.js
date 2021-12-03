@@ -30,7 +30,6 @@ const App = props => {
         .then(result=>{
             if(isMounted){
                 setBooks(result.data)
-                // setLoading(false)
             }})
             
         .catch(error=>{
@@ -66,18 +65,11 @@ const App = props => {
 
     useEffect(()=>{
         setIsMounted(true);
-        // setLoading(true);
         if ( loading ) {
             axios.get("/books")
             .then(result=> 
-                // {
-                // if(isMounted) {
                     setBooks(result.data)
-                    // setLoading(true)
-            //     }
-            // }
-            )
-               
+            )  
             .catch(error=>console.log(error));
 
             return ()=>{setIsMounted(false)}
@@ -86,26 +78,18 @@ const App = props => {
     }, [loading])
 
     useEffect(()=>{
-
         setIsMounted(true);  
-
-        setLoading(true);
-        
+        setLoading(true); 
         axios.get("/books")
         .then(result=>{
-           if(isMounted) 
-           {
+           if(isMounted) {
                 if (result.data.length > 0) {
-                    setWantToRead( result.data.filter(book=>book.wantToRead == true))  
-
+                    setWantToRead( result.data.filter(book=>book.wantToRead == true)) 
                 }
-
                 setLoading(false);
            }
-            })
-      
-        .catch(error=>
-            {
+        })
+        .catch(error=>{
             if(!isMounted) {
                 console.log(error)
                 setLoading(false);
@@ -121,48 +105,34 @@ const App = props => {
     useEffect(()=>{
         setIsMounted(true);
         axios.get("/books")
-        .then(result=>
-            {
+        .then(result=>{
             if(isMounted && result.data.length > 0) {
                 setHaveRead(result.data.filter(book=>book.haveRead == true))
             }
 
             setLoading(false);
-        }
-        )
+        })
         .catch(error=>console.log(error));
 
         return ()=>{setIsMounted(false)}
        
     }, [books])
 
-    //this add function is working correctly now, shows book immediately after adding
     const addBookToWantToRead = (event, id)=>{
         event.preventDefault();
 
-        //set loading to true so it fetches the books array and filters the new want to read array 
         setLoading(true);
-
-        console.log(id);  
-        
-        console.log("button clicked ! added to want to read !")
 
         axios.post("/books/WantToRead", {id: id})
         .then(result=>setLoading(true))
         .catch(error=>console.log(error)
         );
-
-    
     };
 
     const addBookToHaveRead = (event, id)=>{
         event.preventDefault();
 
         setLoading(true);
-
-        console.log(id);
-
-        console.log("button clicked ! added to have read !")
 
         axios.post("/books/HaveRead", {id: id})
         .then(result=>setLoading(true))
@@ -230,7 +200,6 @@ const App = props => {
 
     const [errors, setErrors] = useState({});
 
-
     const handleFormSubmit = (event)=>{
         event.preventDefault();
 
@@ -269,7 +238,6 @@ const App = props => {
         }
         )
         .catch(error=>{
-                // console.log(error.response)
 
             if(error?.response?.status == 422) {
                 error?.response?.data?.errors?.forEach(({message, path})=>{
@@ -286,18 +254,13 @@ const App = props => {
             }
           
         })
-
-        // setErrors(error);
-
+        setErrors(error);
     }
 
     return ( 
         <Router>
             <div className="App">
-                   
-                        
             <Navbar />
-
             <div className="content">
                 <Switch>
                     <Route exact path="/">
@@ -307,9 +270,7 @@ const App = props => {
 
                         {books.length > 0 ? <h1>All your books</h1> : null}
 
-                        <Books books={books} 
-                        addBookToWantToRead={addBookToWantToRead}
-                        deleteBook={deleteBook} addBookToHaveRead=
+                        <Books books={books} addBookToWantToRead={addBookToWantToRead} deleteBook={deleteBook} addBookToHaveRead=
                         {addBookToHaveRead} 
                         
                         />

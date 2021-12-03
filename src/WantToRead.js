@@ -7,8 +7,6 @@ const WantToRead = props => {
 
             <ul className="allBooks">
 
-            {console.log(props.wantToRead)}
-
             {props.wantToRead == false ? <div className="emptyList" >You haven't added any books to this list yet !</div>: null} 
 
             {props.wantToRead !== undefined ? 
@@ -19,18 +17,16 @@ const WantToRead = props => {
                     <h3>Author: {book.author}</h3>
                     <div>Summary: {book.summary}</div>
 
-                    <button id={index} onClick={()=>props.deleteBook(book._id)}
-                    >Remove</button>
+                    <button id={index} onClick={()=>props.deleteBook(book._id)}>Remove</button>
 
                  </li>
-            )
-            )
+            ))
             :
             null
             } 
             </ul>
 
-            </>
+        </>
 
      );
 }

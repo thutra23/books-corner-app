@@ -13933,7 +13933,7 @@ var App = function App(props) {
     setLoading(true);
     axios__WEBPACK_IMPORTED_MODULE_0___default().get("/books").then(function (result) {
       if (isMounted) {
-        setBooks(result.data); // setLoading(false)
+        setBooks(result.data);
       }
     })["catch"](function (error) {
       console.log(error);
@@ -13990,18 +13990,12 @@ var App = function App(props) {
   };
 
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
-    setIsMounted(true); // setLoading(true);
+    setIsMounted(true);
 
     if (loading) {
       axios__WEBPACK_IMPORTED_MODULE_0___default().get("/books").then(function (result) {
-        return (// {
-          // if(isMounted) {
-          setBooks(result.data)
-        );
-      } // setLoading(true)
-      //     }
-      // }
-      )["catch"](function (error) {
+        return setBooks(result.data);
+      })["catch"](function (error) {
         return console.log(error);
       });
       return function () {
@@ -14051,14 +14045,11 @@ var App = function App(props) {
     return function () {
       setIsMounted(false);
     };
-  }, [books]); //this add function is working correctly now, shows book immediately after adding
+  }, [books]);
 
   var addBookToWantToRead = function addBookToWantToRead(event, id) {
-    event.preventDefault(); //set loading to true so it fetches the books array and filters the new want to read array 
-
+    event.preventDefault();
     setLoading(true);
-    console.log(id);
-    console.log("button clicked ! added to want to read !");
     axios__WEBPACK_IMPORTED_MODULE_0___default().post("/books/WantToRead", {
       id: id
     }).then(function (result) {
@@ -14071,8 +14062,6 @@ var App = function App(props) {
   var addBookToHaveRead = function addBookToHaveRead(event, id) {
     event.preventDefault();
     setLoading(true);
-    console.log(id);
-    console.log("button clicked ! added to have read !");
     axios__WEBPACK_IMPORTED_MODULE_0___default().post("/books/HaveRead", {
       id: id
     }).then(function (result) {
@@ -14185,7 +14174,6 @@ var App = function App(props) {
     })["catch"](function (error) {
       var _error$response;
 
-      // console.log(error.response)
       if ((error === null || error === void 0 ? void 0 : (_error$response = error.response) === null || _error$response === void 0 ? void 0 : _error$response.status) == 422) {
         var _error$response2, _error$response2$data, _error$response2$data2;
 
@@ -14206,7 +14194,8 @@ var App = function App(props) {
           }
         });
       }
-    }); // setErrors(error);
+    });
+    setErrors(error);
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.BrowserRouter, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
@@ -14304,7 +14293,7 @@ var BookForm = function BookForm(props) {
     type: "text",
     value: props.summary,
     onChange: props.handleSummaryChange
-  })), console.log(props.errors), props.errors ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  })), props.errors ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "errorMessage"
   }, (_props$errros = props.errros) === null || _props$errros === void 0 ? void 0 : _props$errros.summary) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "errorMessage"
@@ -14332,7 +14321,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var Books = function Books(props) {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", {
     className: "allBooks"
   }, props.books !== undefined ? props.books.map(function (book, index) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -14356,7 +14345,7 @@ var Books = function Books(props) {
         return props.deleteBook(book._id);
       }
     }, "Delete")));
-  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "No books!")));
+  }) : null);
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Books);
@@ -14380,7 +14369,7 @@ __webpack_require__.r(__webpack_exports__);
 var HaveRead = function HaveRead(props) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "The books you have read"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", {
     className: "allBooks"
-  }, console.log(props.haveRead), props.haveRead == false ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, props.haveRead == false ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "emptyList"
   }, "You haven't added any books to this list yet !") : null, props.haveRead !== undefined ? props.haveRead.map(function (book, index) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
@@ -14452,7 +14441,7 @@ __webpack_require__.r(__webpack_exports__);
 var WantToRead = function WantToRead(props) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "The books you want to read"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", {
     className: "allBooks"
-  }, console.log(props.wantToRead), props.wantToRead == false ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, props.wantToRead == false ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "emptyList"
   }, "You haven't added any books to this list yet !") : null, props.wantToRead !== undefined ? props.wantToRead.map(function (book, index) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
