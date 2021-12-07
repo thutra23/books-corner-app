@@ -16,7 +16,7 @@ const WantToRead = props => {
                     <h3>{book.author}</h3>
                     <div>Summary: {book.summary}</div>
 
-                    <button id={index} onClick={()=>props.deleteBook(book._id)}>Remove</button>
+                    <button id={index} onClick={()=>props.deleteWantToRead(book._id)}>Remove</button>
 
                  </li>
             ))

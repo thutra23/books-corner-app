@@ -38,6 +38,18 @@ exports.deleteBook = (req,res)=>{
     .catch(error=>res.status(500).send(error));
 }
 
+exports.deleteWantToRead = (req,res)=>{
+    Book.deleteOne({_id:req.params.id}).exec()
+    .then(result=>res.json(result))
+    .catch(error=>res.status(500).send(error));
+}
+
+exports.deleteHaveRead = (req,res)=>{
+    Book.deleteOne({_id: req.params.id}).exec()
+    .then(result=>res.json(result))
+    .catch(error=>res.status(500).send(error));
+}
+
 exports.addWantToRead = (req,res)=>{
     Book.findOneAndUpdate({_id: req.body.id}, {wantToRead: true}).exec()
     .then(result=>console.log(result))

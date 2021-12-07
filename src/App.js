@@ -24,22 +24,24 @@ const App = props => {
         }
       }, [])
 
-    useEffect(function refreshAllBooksOnce() {
-        setIsMounted(true);
-        setLoading(true);
-        axios.get("/books")
-        .then(result=>{
-            if(isMounted){
-                setBooks(result.data)
-            }})
+    // useEffect(function refreshAllBooksOnce() {
+    //     setIsMounted(true);
+    //     setLoading(true);
+    //     axios.get("/books")
+    //     .then(result=>{
+    //         if(isMounted){
+    //             setBooks(result.data)
+    //         }})
             
-        .catch(error=>{
-            console.log(error);
-            setLoading(false)})
-            
-
-        return ()=>{ setIsMounted(false) }
-    },[books])
+    //     .catch(error=>{
+    //         console.log(error);
+    //         setLoading(false)})
+        
+    //     return ()=>{ 
+    //         setIsMounted(false);
+    //         setLoading(false); 
+    //     }
+    // },[books])
 
     const [books, setBooks] = useState([]);
 
@@ -60,64 +62,101 @@ const App = props => {
         .then(result=>
             console.log(result.data),
             setBooks(books.filter(book=>book._id !== id))
+ 
             )
         .catch(error=>console.log(error));
     }
 
+    const deleteWantToRead = (id) =>{
+        axios.delete("/books/WantToRead/"+id)
+        .then(result=>{
+            // setLoading(true);
+            setBooks(books.filter(book=>book._id !== id))
+            setLoading(true);
+        })
+        .catch(error=>console.log(error));
+    }
+
+
+    const deleteHaveRead = (id) =>{
+        axios.delete("/books/HaveRead/"+id)
+        .then(result=>{
+            setBooks(books.filter(book=>book._id !== id))
+            setLoading(true);
+        })
+        .catch(error=>console.log(error));
+    }
+
     useEffect(()=>{
+        console.log("loading books!")
         setIsMounted(true);
+        // setLoading(true);
         if ( loading ) {
             axios.get("/books")
-            .then(result=> 
-                    setBooks(result.data)
-            )  
+            .then(result=> {
+                setBooks(result.data);
+                
+                if (result.data.length > 0) {
+                setWantToRead( result.data.filter(book=>book.wantToRead == true));
+                setHaveRead(result.data.filter(book=>book.haveRead == true))
+            } else {
+                setWantToRead([]);
+                setHaveRead([])
+            }})  
             .catch(error=>console.log(error));
+            
+            setLoading(false);
 
-            return ()=>{setIsMounted(false)}
+            return ()=>{
+                setIsMounted(false);
+                setLoading(false);
+            }
         } 
 
     }, [loading])
 
-    useEffect(()=>{
-        setIsMounted(true);  
-        setLoading(true); 
-        axios.get("/books")
-        .then(result=>{
-           if(isMounted) {
-                if (result.data.length > 0) {
-                    setWantToRead( result.data.filter(book=>book.wantToRead == true)) 
-                }
-                setLoading(false);
-           }
-        })
-        .catch(error=>{
-            if(!isMounted) {
-                console.log(error)
-                setLoading(false);
-            };
-        }
-        )       
+    // useEffect(()=>{
+    //     console.log(loading)
+    // }, [loading])
 
-        //cleanup function
-        return  () => { setIsMounted(false)}
 
-    }, [books])
+    // useEffect(()=>{
+    //     console.log("loading want to read!");
+    //     axios.get("/books")
+    //     .then(result=>{
+    //             if (result.data.length > 0) {
+    //                 setWantToRead( result.data.filter(book=>book.wantToRead == true)) 
+    //        } else {
+    //            setWantToRead([]);
+    //        }
+    //     })
+    //     .catch(error=>{
+    //             console.log(error)
+    //             setLoading(false);
+    //     }
+    //     )       
+    //     //cleanup function
+    //     return  () => { setIsMounted(false)}
 
-    useEffect(()=>{
-        setIsMounted(true);
-        axios.get("/books")
-        .then(result=>{
-            if(isMounted && result.data.length > 0) {
-                setHaveRead(result.data.filter(book=>book.haveRead == true))
-            }
+    // }, [books])
 
-            setLoading(false);
-        })
-        .catch(error=>console.log(error));
+    // useEffect(()=>{
+    //     setIsMounted(true);
+    //     axios.get("/books")
+    //     .then(result=>{
+    //         if(isMounted && result.data.length > 0) {
+    //             setHaveRead(result.data.filter(book=>book.haveRead == true))
+    //         } else {
+    //             setHaveRead([])
+    //         }     
 
-        return ()=>{setIsMounted(false)}
+    //         setLoading(false);
+    //     })
+    //     .catch(error=>console.log(error));
+
+    //     return ()=>{setIsMounted(false)}
        
-    }, [books])
+    // }, [books])
 
     const addBookToWantToRead = (event, id)=>{
         event.preventDefault();
@@ -235,7 +274,9 @@ const App = props => {
         .then(result=>{
             setErrors(error),
             console.log(result.data), 
+            console.log(loading)
             setLoading(true)
+            
         }
         )
         .catch(error=>{
@@ -267,7 +308,7 @@ const App = props => {
                     <Route exact path="/">
                         <BookForm books={books} name={name} author={author} handleNameChange={handleNameChange} handleAuthorChange={handleAuthorChange} handleFormSubmit={handleFormSubmit} summary={summary} handleSummaryChange={handleSummaryChange} wantToRead={wantToRead}  
                         nameError={nameError} authorError={authorError} summaryError={summaryError} 
-                        errors={errors} />
+                        errors={errors} deleteWantToRead={deleteWantToRead} deleteHaveRead={deleteHaveRead} />
 
                         {books.length > 0 ? <h1>All your books</h1> : null}
 
@@ -279,11 +320,11 @@ const App = props => {
                     </Route>
 
                     <Route exact path="/WantToRead">
-                            < WantToRead addBookToWantToRead={addBookToWantToRead} wantToRead={wantToRead} deleteBook={deleteBook}  />
+                            < WantToRead addBookToWantToRead={addBookToWantToRead} wantToRead={wantToRead} deleteBook={deleteBook} deleteWantToRead={deleteWantToRead}  />
                     </Route>
 
                     <Route exact path="/HaveRead">
-                            < HaveRead haveRead={haveRead} deleteBook={deleteBook}
+                            < HaveRead haveRead={haveRead} deleteBook={deleteBook} deleteHaveRead={deleteHaveRead}
                            
                             />
                     </Route>
