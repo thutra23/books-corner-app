@@ -14181,7 +14181,7 @@ var App = function App(props) {
       haveRead: false
     };
     axios__WEBPACK_IMPORTED_MODULE_0___default().post("/books", book).then(function (result) {
-      setErrors(error), console.log(result.data), console.log(loading);
+      setErrors(errorMessage), console.log(result.data), console.log(loading);
       setLoading(true);
     })["catch"](function (error) {
       var _error$response;

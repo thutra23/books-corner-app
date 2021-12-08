@@ -272,7 +272,7 @@ const App = props => {
 
         axios.post("/books", book)
         .then(result=>{
-            setErrors(error),
+            setErrors(errorMessage),
             console.log(result.data), 
             console.log(loading)
             setLoading(true)
@@ -301,7 +301,7 @@ const App = props => {
             console.log(errorMessage)
           
         }).finally(()=>{
-            setErrors(errorMessage);
+            setErrors(errorMessage); 
         })
         
     }
