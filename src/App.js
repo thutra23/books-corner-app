@@ -192,75 +192,75 @@ const App = props => {
     };
 
     //client side form validation 
-    const [nameError, setNameError] = useState();
+    // const [nameError, setNameError] = useState();
 
-    const [authorError, setAuthorError] = useState();
+    // const [authorError, setAuthorError] = useState();
 
-    const [summaryError, setSummaryError] = useState();
+    // const [summaryError, setSummaryError] = useState();
 
-    const validateForm= ()=>{
-        let nameError = "";
-        let authorError = "";
-        let summaryError = "";
+    // const validateForm= ()=>{
+    //     let nameError = "";
+    //     let authorError = "";
+    //     let summaryError = "";
 
-         if(name.trim() == "")  {
-            nameError="Please enter book's name."
-        } else if (name.length < 2) {
-            nameError="Name is too short! Name must be between 2 and 30 characters."
-        } else if (name.length > 30) {
-            nameError=" Name is too long! Name must be between 2 and 30 characters. "
-        }
+    //      if(name.trim() == "")  {
+    //         nameError="Please enter book's name."
+    //     } else if (name.length < 2) {
+    //         nameError="Name is too short! Name must be between 2 and 30 characters."
+    //     } else if (name.length > 30) {
+    //         nameError=" Name is too long! Name must be between 2 and 30 characters. "
+    //     }
 
-        if(author.trim() == "")  {
-            authorError= "Please enter author's name."
-        } else if (author.length < 2) {
-            authorError="Author's name is too short! Author's name must be between 2 and 20 characters."
-        } else if (author.length > 20) {
-            authorError=" Author's name is too long! Author's name must be between 2 and 20 characters. "
-        }
+    //     if(author.trim() == "")  {
+    //         authorError= "Please enter author's name."
+    //     } else if (author.length < 2) {
+    //         authorError="Author's name is too short! Author's name must be between 2 and 20 characters."
+    //     } else if (author.length > 20) {
+    //         authorError=" Author's name is too long! Author's name must be between 2 and 20 characters. "
+    //     }
 
-        if (summary.trim() == "")  {
-            summaryError= "Please enter a short summary."
-        } else if (summary.length < 3) {
-            summaryError=" Summary is too short! Summary must be between 3 and 40 characters."
-        } else if (summary.length > 40) {
-            summaryError=" Summary is too long! Summary must be between 3 and 40 characters. "
-        }
+    //     if (summary.trim() == "")  {
+    //         summaryError= "Please enter a short summary."
+    //     } else if (summary.length < 3) {
+    //         summaryError=" Summary is too short! Summary must be between 3 and 40 characters."
+    //     } else if (summary.length > 40) {
+    //         summaryError=" Summary is too long! Summary must be between 3 and 40 characters. "
+    //     }
 
-        if (nameError || authorError || summaryError) {
-            setNameError(nameError);
-            setAuthorError(authorError);
-            setSummaryError(summaryError);
+    //     if (nameError || authorError || summaryError) {
+    //         setNameError(nameError);
+    //         setAuthorError(authorError);
+    //         setSummaryError(summaryError);
 
-            return false;
-        } 
+    //         return false;
+    //     } 
 
-        return true;
-    }
+    //     return true;
+    // }
 
     const [errors, setErrors] = useState({});
 
     const handleFormSubmit = (event)=>{
         event.preventDefault();
 
-        let error = {
+        let errorMessage = {
             name: "",
             author: "",
             summary:""
         }
 
-        const isValid = validateForm();
+        // const isValid = validateForm();
 
-        if (isValid) {
-            console.log(isValid);
-            setName("");
-            setAuthor("");
-            setSummary("");
-            setNameError("");
-            setAuthorError("");
-            setSummaryError("");
+        // if (isValid) {
+        //     console.log(isValid);
+        //     setName("");
+        //     setAuthor("");
+        //     setSummary("");
+        //     setNameError("");
+        //     setAuthorError("");
+        //     setSummaryError("");
             
-        }
+        // }
 
         const book = {
             name: name,
@@ -280,23 +280,30 @@ const App = props => {
         }
         )
         .catch(error=>{
+            console.log("Validating form!")
 
             if(error?.response?.status == 422) {
-                error?.response?.data?.errors?.forEach(({message, path})=>{
+                console.log("Validating 422" , error.response.data)
+
+                // "message" comes from the message property of json object in Joi schema in validators.js
+                error?.response?.data?.message?.forEach(({message, path})=>{
                     if(path[0]=='name') {
-                        return (error.name = message)
+                        return (errorMessage.name = message)
                     }
                     if(path[0]=='author') {
-                        return (error.author = message)
+                        return (errorMessage.author = message)
                     }
                     if(path[0]='summary') {
-                        return (error.summary = message)
+                        return (errorMessage.summary = message)
                     }
                 })
             }
+            console.log(errorMessage)
           
+        }).finally(()=>{
+            setErrors(errorMessage);
         })
-        setErrors(error);
+        
     }
 
     return ( 
@@ -307,7 +314,7 @@ const App = props => {
                 <Switch>
                     <Route exact path="/">
                         <BookForm books={books} name={name} author={author} handleNameChange={handleNameChange} handleAuthorChange={handleAuthorChange} handleFormSubmit={handleFormSubmit} summary={summary} handleSummaryChange={handleSummaryChange} wantToRead={wantToRead}  
-                        nameError={nameError} authorError={authorError} summaryError={summaryError} 
+                        // nameError={nameError} authorError={authorError} summaryError={summaryError} 
                         errors={errors} deleteWantToRead={deleteWantToRead} deleteHaveRead={deleteHaveRead} />
 
                         {books.length > 0 ? <h1>All your books</h1> : null}

@@ -30,7 +30,6 @@ const bookValidator= (req, res, next)=>{
         next();
     } else {
         res.status(422).json({
-            error: error,
             message: error.details
         })
     }
